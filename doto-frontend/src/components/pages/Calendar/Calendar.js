@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+import { blue } from "@material-ui/core/colors";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -9,6 +11,7 @@ import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import AddIcon from "@material-ui/icons/Add";
 import ModalContent from "../../ModalContent";
+import Points from "../../Points";
 import CalendarComponent from "./CalendarComponent";
 import CalendarListView from "./CalendarListView";
 import Header from "../Header";
@@ -34,10 +37,15 @@ const useStyles = makeStyles(theme => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    blue: {
+        color: theme.palette.getContrastText(blue[500]),
+        backgroundColor: blue[500],
+        boxShadow: theme.shadows[5],
+    },
 }));
 
 const Calendar = () => {
-    var points = 20;
+    var pointRef = React.createRef();
 
     const classes = useStyles();
     const [listView, setListView] = useState();
@@ -64,7 +72,7 @@ const Calendar = () => {
         };
         fetchUserInfo();
         fetchTasks();
-    }, []);
+    }, [setTheme]);
 
     // Adds new task based on input fields from Modal
     const addNewTask = (newTask, currentDate) => {
@@ -77,6 +85,12 @@ const Calendar = () => {
     const handleTaskStatusUpdated = taskId => {
         const newTasks = [...tasks];
         const taskToUpdate = newTasks.find(task => task.taskId === taskId);
+        // if duration is passed in, use that, otherwise calculate it from start and end dates
+        const minutes = taskToUpdate.duration
+            ? taskToUpdate.duration
+            : Math.abs(taskToUpdate.startDate - taskToUpdate.endDate) / 1000 / 60;
+        // if task is completed, increase points, otherwise, decrease points
+        taskToUpdate.isComplete ? pointRef.current.changePoints(-minutes) : pointRef.current.changePoints(minutes);
         taskToUpdate.isComplete = !taskToUpdate.isComplete;
         DotoService.updateTask(taskToUpdate);
         setTasks(newTasks);
@@ -106,6 +120,12 @@ const Calendar = () => {
                             {listView && <CalendarTodayIcon />}
                         </Fab>
                     </Tooltip>
+                </div>
+                <div>
+                    <h2>Points</h2>
+                    <Avatar className={classes.blue}>
+                        <Points ref={pointRef} id="points_id" />
+                    </Avatar>
                 </div>
             </div>
             <span className="content-container">
