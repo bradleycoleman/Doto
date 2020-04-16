@@ -37,6 +37,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Calendar = () => {
+    var points = 20;
+
     const classes = useStyles();
     const [listView, setListView] = useState();
     const [tasks, setTasks] = useState([]);
