@@ -136,7 +136,6 @@ const Calendar = () => {
                         </Fab>
                     </Tooltip>
                 </div>
-            </div>
                 <div className="mb-3">
                     <Tooltip title="Productivity Score View">
                         <Fab onClick={handleIsScoreOpen} size="small">
