@@ -1,17 +1,3 @@
-.modal-p {
-    background-image: url("./images//modal-background-purple.jpg");
-    background-size: cover;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
-.modal-g {
-    background-image: url("./images//modal-background-green.jpg");
-    background-size: cover;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
 .makeStyles-paper-507 {
     padding: 0px !important;
 }
@@ -23,9 +9,6 @@
 .forum-content {
     text-align: left;
     margin-left: 100px;
-    height: 80vh;
-    min-width: 100px;
-    width: 300px;
 }
 
 .name-field {
@@ -33,12 +16,12 @@
 }
 
 .drop-down {
-    padding-top: 10px;
+    padding-top: 30px;
     width: 200px;
 }
 
 .text-area {
-    margin-top: 0px !important;
+    margin-top: 20px !important;
     width: 350px;
 }
 
@@ -58,9 +41,9 @@
 }
 
 .spacing {
-    margin-top: 0px !important;
+    margin-top: 55px !important;
 }
 
 .group-spacing {
-    margin-top: 0px !important;
+    margin-top: 10px !important;
 }

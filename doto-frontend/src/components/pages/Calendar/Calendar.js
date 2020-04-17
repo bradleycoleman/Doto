@@ -7,8 +7,10 @@ import Fab from "@material-ui/core/Fab";
 import Tooltip from "@material-ui/core/Tooltip";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import ScoreIcon from "@material-ui/icons/Score";
 import AddIcon from "@material-ui/icons/Add";
 import ModalContent from "../../ModalContent";
+import ProductivityScore from "../../ProductivityScore";
 import CalendarComponent from "./CalendarComponent";
 import CalendarListView from "./CalendarListView";
 import Header from "../Header";
@@ -41,9 +43,18 @@ const Calendar = () => {
 
     const classes = useStyles();
     const [listView, setListView] = useState();
+    const [isOpenScore, setIsOpenScore] = useState(false);
     const [tasks, setTasks] = useState([]);
     const [open, setOpen] = useState(false);
     const [theme, setTheme] = useContext(ThemeContext);
+
+    const handleIsScoreOpen = () => {
+        if (isOpenScore) {
+            setIsOpenScore(false);
+        } else {
+            setIsOpenScore(true);
+        }
+    };
 
     const handleOpen = () => {
         setOpen(true);
@@ -64,7 +75,7 @@ const Calendar = () => {
         };
         fetchUserInfo();
         fetchTasks();
-    }, []);
+    }, [setTheme]);
 
     // Adds new task based on input fields from Modal
     const addNewTask = (newTask, currentDate) => {
@@ -107,6 +118,13 @@ const Calendar = () => {
                         </Fab>
                     </Tooltip>
                 </div>
+                <div className="mb-3">
+                    <Tooltip title="Productivity Score View">
+                        <Fab onClick={handleIsScoreOpen} size="small">
+                            <ScoreIcon />
+                        </Fab>
+                    </Tooltip>
+                </div>
             </div>
             <span className="content-container">
                 <Header title="Calendar" />
@@ -132,6 +150,25 @@ const Calendar = () => {
                     <Fade in={open}>
                         <div className={classes.paper}>
                             <ModalContent addNewTask={addNewTask} modalBackground={theme} />
+                        </div>
+                    </Fade>
+                </Modal>
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={isOpenScore}
+                    onClose={handleIsScoreOpen}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                        timeout: 500,
+                    }}
+                >
+                    {/* Transition effects for list view of to-do tasks for today */}
+                    <Fade in={isOpenScore}>
+                        <div className={classes.paper}>
+                            <ProductivityScore />
                         </div>
                     </Fade>
                 </Modal>
