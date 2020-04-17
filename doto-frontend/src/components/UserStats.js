@@ -21,14 +21,6 @@ const useStyles = makeStyles(theme => ({
 
 const UserStats = props => {
     const classes = useStyles();
-    // dummy values for stats
-    // TODO: implement ways of retrieving these values
-    var tasksCompleted = 5;
-    var hoursWorked = 10.5;
-    var dayRecord = 4;
-    var highTasks = 2;
-    var medTasks = 2;
-    var lowTasks = 1;
     var highColor = '#2F7D32'
     var medColor = '#3bb300'
     var lowColor = '#41d900'
@@ -48,18 +40,19 @@ const UserStats = props => {
                 <div className="stats-row">
                     <div className="stats-graphic">
                         <PieChart
+                            totalValue={props.tasksCompleted}
                             data={[
-                                { title: 'High Priority', value: highTasks, color: highColor},
-                                { title: 'Medium Priority', value: medTasks, color: medColor},
-                                { title: 'Low Priority', value: lowTasks, color: lowColor},
+                                { title: 'High Priority', value: props.highTasks, color: highColor},
+                                { title: 'Medium Priority', value: props.medTasks, color: medColor},
+                                { title: 'Low Priority', value: props.lowTasks, color: lowColor},
                             ]}
                         />
                     </div>
                     <div className="stats-text">
-                        <p><b>{tasksCompleted}</b> Tasks Completed</p>
-                        <p>High Priority: <b><font color={highColor}>{highTasks}</font></b></p>
-                        <p>Medium Priority: <b><font color={medColor}>{medTasks}</font></b></p>
-                        <p>Low Priority: <b><font color={lowColor}>{lowTasks}</font></b></p>
+                        <p><b>{props.tasksCompleted}</b> Tasks Completed</p>
+                        <p>High Priority: <b><font color={highColor}>{props.highTasks}</font></b></p>
+                        <p>Medium Priority: <b><font color={medColor}>{props.medTasks}</font></b></p>
+                        <p>Low Priority: <b><font color={lowColor}>{props.lowTasks}</font></b></p>
                     </div>
                 </div>
                 <div className="stats-row">
@@ -67,7 +60,7 @@ const UserStats = props => {
                         <AccessTimeIcon></AccessTimeIcon>
                     </div>
                     <div className="stats-text">
-                        <p><b>{hoursWorked}</b> Hours Worked</p>
+                        <p><b>{props.hoursWorked}</b> Hours Worked</p>
                     </div>
                 </div>
                 <div className="stats-row">
@@ -75,7 +68,7 @@ const UserStats = props => {
                         <StarIcon></StarIcon>
                     </div>
                     <div className="stats-text">
-                        <p>1-Day Record: <b>{dayRecord}</b></p>
+                        <p>1-Day Record: <b>{props.dayRecord}</b></p>
                     </div>
                 </div>
             </div>

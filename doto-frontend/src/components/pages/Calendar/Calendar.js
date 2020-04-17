@@ -185,7 +185,16 @@ const Calendar = () => {
                 >
                     <Fade in={statsOpen}>
                         <div className={classes.paper}>
-                            <UserStats modalBackground={theme}/>
+                            <UserStats
+                                modalBackground={theme}
+                                // TODO: get real values for these.
+                                tasksCompleted='5'
+                                hoursWorked='10.5'
+                                dayRecord='4'
+                                highTasks='2'
+                                medTasks='2'
+                                lowTasks='1'
+                            />
                         </div>
                     </Fade>
                 </Modal>
